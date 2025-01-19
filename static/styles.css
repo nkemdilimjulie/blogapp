@@ -1,0 +1,32 @@
+title {
+    color: green;
+}
+
+header {
+    color: green;
+}
+
+p {
+    color: forestgreen;
+}
+body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        background-image: url("{% color_back.jpg %}");
+}
+ul {
+        list-style-type: none;
+        padding: 20px;
+        border-color: red;
+}
+
+li {
+        background-color: #e0e0e0;
+        padding: 10px;
+        margin: 5px 0;
+}
+
+h1 {
+    color: bisque;
+}
+

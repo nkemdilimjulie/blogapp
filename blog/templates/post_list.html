@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Using setUpTestData</title>
+    <!--<link rel="stylesheet" href="{% static 'styles.css' %}">-->
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <p></p>
+    <h1> ModelPage of my blogapp Project" </h1>
+    <p>We gonna run some tests on our Models for our Database</p>
+
+
+    <ul>
+        {% for post in my_posts %} <!-- my_posts = [post object(1), post object (2), etc.]--> 
+
+            <li>{{ post.title }}</li>
+        {% empty %}
+            <li>{{ post.content }}</li>
+
+        {% endfor %}
+    </ul>
+</body>
+</html>
