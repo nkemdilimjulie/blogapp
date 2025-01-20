@@ -68,4 +68,95 @@ class PostModelTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'post_detail.html')  # Verify the correct template is used
 
-    
+# mmmmmmmmmmmmmmmmmmmmmmmm *Bonus Task:* mmmmmmmmmmmmmmmmmmmmmm
+#
+# mmmmmmmmmmmmmmmmmmmmm The Question  starts Here mmmmmmmmmmmmm
+# - Modify your setUpTestData to create multiple Post objects and update your test methods to check for the presence of multiple posts in the post list view.
+# 2:03
+# *Sample Test Class (Skeleton):*
+# python
+# from django.test import TestCase
+# from django.urls import reverse
+# from .models import Post
+
+# class PostModelTests(TestCase):
+#     @classmethod
+#     def setUpTestData(cls):
+#         # Create test data here
+#         cls.post = Post.objects.create(title="Test Post", content="This is a test content.")
+
+#     def test_post_content(self):
+#         # Test content here
+#         pass
+
+#     def test_post_title(self):
+#         # Test title here
+#         pass
+
+#     def test_post_list_view(self):
+#         # Test post list view here
+#         pass
+
+#     def test_post_detail_view(self):
+#         # Test post detail view here
+#         pass
+
+#     def test_post_list_template(self):
+#         # Test post list template here
+#         pass
+
+#     def test_post_detail_template(self):
+#         # Test post detail template here
+#         pass
+# Complete this skeleton with your test logic, run the tests, and check if all of them pass!
+
+
+# mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm *Bonus Task:* The Question Ends Here mmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+class PostModelTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Create multiple test Post objects
+        cls.posts = [
+            Post.objects.create(title="Test Post 1", content="Content for post 1."),
+            Post.objects.create(title="Test Post 2", content="Content for post 2."),
+            Post.objects.create(title="Test Post 3", content="Content for post 3."),
+        ]
+
+    def test_post_content(self):
+        """Test if the content of the posts matches the expected content."""
+        post = self.posts[0]
+        self.assertEqual(post.content, "Content for post 1.")
+
+    def test_post_title(self):
+        """Test if the title of the posts matches the expected title."""
+        post = self.posts[1]
+        self.assertEqual(post.title, "Test Post 2")
+
+    def test_post_list_view(self):
+        """Test if the post list view displays all posts."""
+        response = self.client.get(reverse("post_list"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Test Post 1")
+        self.assertContains(response, "Test Post 2")
+        self.assertContains(response, "Test Post 3")
+
+    def test_post_detail_view(self):
+        """Test if the post detail view displays the correct content for a specific post."""
+        post = self.posts[2]  # Test the third post
+        response = self.client.get(reverse("post_detail", args=[post.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Content for post 3.")
+
+    def test_post_list_template(self):
+        """Test if the correct template is used for the post list view."""
+        response = self.client.get(reverse("post_list"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "post_list.html")
+
+    def test_post_detail_template(self):
+        """Test if the correct template is used for the post detail view."""
+        post = self.posts[0]
+        response = self.client.get(reverse("post_detail", args=[post.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "post_detail.html")
